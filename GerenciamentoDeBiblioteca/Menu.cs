@@ -6,16 +6,16 @@ namespace GerenciamentoDeBiblioteca
     {
         internal byte operacaoDesejada;
         Livro livro = new Livro();
-
+        
 
         public void MenuGeral()
         {
             Console.WriteLine("\nQual operação deseja realizar? Digite um número:\n");
             Console.WriteLine("1 - Adicionar um livro ao acervo da biblioteca");
             Console.WriteLine("2 - Remover um livro do acervo da biblioteca");
-            Console.WriteLine("3 - Consultar se um livro está disponível para empréstimo");
-            Console.WriteLine("4 - Empréstimo de um livro para um usuário registrado");
-            Console.WriteLine("5 - Devolução de um livro emprestado");
+            Console.WriteLine("3 - Consultar se um livro está disponível para aluguel");
+            Console.WriteLine("4 - Aluguel de um livro para um usuário registrado");
+            Console.WriteLine("5 - Devolução de um livro alugado");
             Console.WriteLine("6 - Mostrar todos os livros");
             Console.WriteLine("Outro dígito - Sair");
             operacaoDesejada = byte.Parse(Console.ReadLine());
@@ -32,7 +32,7 @@ namespace GerenciamentoDeBiblioteca
                     MenuConsultarLivro();
                     break;
                 case 4:
-                    MenuEmprestarLivro();
+                    MenuAlugarLivro();
                     break;
                 case 5:
                     MenuDevolverLivro();
@@ -106,9 +106,13 @@ namespace GerenciamentoDeBiblioteca
         }
 
 
-        public void MenuEmprestarLivro()
+        public void MenuAlugarLivro()
         {
-
+            Console.WriteLine("\nQual título gostaria de alugar?");
+            string emprestarTitulo = Console.ReadLine();
+            Console.WriteLine("\nQual autor do livro?");
+            string emprestarAutor = Console.ReadLine();
+            livro.EmprestarLivro(emprestarTitulo, emprestarAutor);
         }
 
 

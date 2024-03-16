@@ -30,7 +30,7 @@ namespace GerenciamentoDeBiblioteca
         public void AdicionarLivro(string titulo, string autor, DateTime dataPublicacao, byte copias)
         {
             Livro livro = new Livro(titulo, autor, dataPublicacao, copias);
-            
+
             if (acervoLivros.Count > 0)
             {
                 foreach (Livro x in acervoLivros)
@@ -68,27 +68,55 @@ namespace GerenciamentoDeBiblioteca
             }
         }
 
-        public void ConsultarLivro(string titulo) {
+        public void ConsultarLivro(string titulo)
+        {
+            bool nenhumLivroEncontrado = true;
+
             foreach (Livro livro in acervoLivros)
-            {
+            {                
                 if (titulo.Equals(livro.Titulo))
                 {
+                    nenhumLivroEncontrado = false;
+
                     if (livro.Copias > 0)
                     {
                         Console.WriteLine($"Livro disponível. Quantidade: {livro.Copias} cópias.");
-                        break;
                     }
-                    else Console.WriteLine("Livro não tem cópias disponíveis.");
+                    else
+                    {
+                        Console.WriteLine("Livro não tem cópias disponíveis.");
+                    }
                 }
-                else if ()
-                {
+                else continue;
+            }
 
-                }
-                else Console.WriteLine("Livro não existe no acervo.");
-                
+            if (nenhumLivroEncontrado == true)
+            {
+                Console.WriteLine("Livro não existe no acervo.");
             }
 
         }
+
+
+        public void EmprestarLivro(string titulo, string autor)
+        {
+            foreach (Livro livro in acervoLivros)
+            {
+                if (titulo.Equals(livro.Titulo) && autor.Equals(livro.Autor))
+                {
+                    Console.WriteLine("Para qual usuário será alugado o livro?");
+                    Console.Write("Nome: ");
+                    string nomeUsuario = Console.ReadLine();
+                    Console.Write("Sobrenome: ");
+                    string sobrenomeUsuario = Console.ReadLine();
+                    Usuario usuario = new Usuario(nomeUsuario, sobrenomeUsuario);
+                    usuario.livrosAlugados.Add(livro);
+                }
+               
+            }
+
+        }
+
         public void MostrarLivros()
         {
             foreach (Livro livro in acervoLivros)
