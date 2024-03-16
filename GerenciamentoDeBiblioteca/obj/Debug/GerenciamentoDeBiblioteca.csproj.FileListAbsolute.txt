@@ -1,5 +1,4 @@
 C:\Users\90660\Desktop\repositório C#\GerenciamentoDeBiblioteca\GerenciamentoDeBiblioteca\obj\Debug\GerenciamentoDeBiblioteca.csproj.AssemblyReference.cache
-C:\Users\90660\Desktop\repositório C#\GerenciamentoDeBiblioteca\GerenciamentoDeBiblioteca\obj\Debug\GerenciamentoDeBiblioteca.csproj.SuggestedBindingRedirects.cache
 C:\Users\90660\Desktop\repositório C#\GerenciamentoDeBiblioteca\GerenciamentoDeBiblioteca\obj\Debug\GerenciamentoDeBiblioteca.csproj.CoreCompileInputs.cache
 C:\Users\90660\Desktop\repositório C#\GerenciamentoDeBiblioteca\GerenciamentoDeBiblioteca\bin\Debug\GerenciamentoDeBiblioteca.exe.config
 C:\Users\90660\Desktop\repositório C#\GerenciamentoDeBiblioteca\GerenciamentoDeBiblioteca\bin\Debug\GerenciamentoDeBiblioteca.exe

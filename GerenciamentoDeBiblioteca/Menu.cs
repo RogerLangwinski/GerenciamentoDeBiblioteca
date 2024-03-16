@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Globalization;
 namespace GerenciamentoDeBiblioteca
 {
     class Menu
@@ -10,58 +10,65 @@ namespace GerenciamentoDeBiblioteca
 
         public void MenuGeral()
         {
-            Console.WriteLine("Qual operação deseja realizar? Digite um número:\n");
+            Console.WriteLine("\nQual operação deseja realizar? Digite um número:\n");
             Console.WriteLine("1 - Adicionar um livro ao acervo da biblioteca");
             Console.WriteLine("2 - Remover um livro do acervo da biblioteca");
-            Console.WriteLine("3 - Verificar se um livro está disponível para empréstimo");
+            Console.WriteLine("3 - Consultar se um livro está disponível para empréstimo");
             Console.WriteLine("4 - Empréstimo de um livro para um usuário registrado");
             Console.WriteLine("5 - Devolução de um livro emprestado");
             Console.WriteLine("6 - Mostrar todos os livros");
             Console.WriteLine("Outro dígito - Sair");
             operacaoDesejada = byte.Parse(Console.ReadLine());
 
-            while (operacaoDesejada >= 1 && operacaoDesejada <= 6)
+            switch (operacaoDesejada)
             {
-                if (operacaoDesejada == 1)
-                {
+                case 1:
                     MenuAdicionarLivro();
-                }
-                else if (operacaoDesejada == 2)
-                {
+                    break;
+                case 2:
                     MenuRemoverLivro();
-                }
-                else if (operacaoDesejada == 3)
-                {
+                    break;
+                case 3:
                     MenuConsultarLivro();
-                }
-                else if (operacaoDesejada == 4)
-                {
+                    break;
+                case 4:
                     MenuEmprestarLivro();
-                }
-                else if (operacaoDesejada == 5)
-                {
+                    break;
+                case 5:
                     MenuDevolverLivro();
-                }
-                else if (operacaoDesejada == 6)
-                {
+                    break;
+                case 6:
                     MenuMostrarTodosLivros();
-                }
+                    break;
             }
         }
 
 
         public void MenuFormularioPadrao()
         {
-            Console.WriteLine("Qual o titulo do livro?");
+            Console.WriteLine("\nQual o titulo do livro?");
             string titulo = Console.ReadLine();
 
-            Console.WriteLine("Qual o autor do livro?");
+            Console.WriteLine("\nQual o autor do livro?");
             string autor = Console.ReadLine();
 
-            Console.WriteLine("Qual a data de publicação?");
-            DateTime dataPublicacao = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("\nQual a data de publicação? (dd/mm/aaaa)");
+            DateTime dataPublicacao;
 
-            Console.WriteLine("Qual quantidade de copias?");
+            while (true)
+            {
+                try
+                {
+                    dataPublicacao = DateTime.Parse(Console.ReadLine());
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Data inválida! {e.Message}. Cadastre a data novamente (dd/mm/aaaa).");
+                }
+            }
+            
+            Console.WriteLine("\nQual quantidade de copias?");
             byte quantidade = byte.Parse(Console.ReadLine());
 
             livro.Titulo = titulo;
@@ -91,7 +98,11 @@ namespace GerenciamentoDeBiblioteca
 
         public void MenuConsultarLivro()
         {
+            Console.WriteLine("\nQual título gostaria de consultar?");
+            string consultarTitulo = Console.ReadLine();
+            livro.ConsultarLivro(consultarTitulo);
 
+            MenuGeral();
         }
 
 

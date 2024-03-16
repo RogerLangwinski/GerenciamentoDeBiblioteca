@@ -43,7 +43,7 @@ namespace GerenciamentoDeBiblioteca
                     else
                     {
                         acervoLivros.Add(livro);
-                        Console.WriteLine($"Livro {titulo} adicionado.\n");
+                        Console.WriteLine($"\nLivro {titulo} adicionado.\n");
                         break;
                     }
                 }
@@ -51,7 +51,7 @@ namespace GerenciamentoDeBiblioteca
             else
             {
                 acervoLivros.Add(livro);
-                Console.WriteLine($"Livro {titulo} adicionado.\n");
+                Console.WriteLine($"\nLivro {titulo} adicionado.\n");
             }
         }
 
@@ -68,7 +68,27 @@ namespace GerenciamentoDeBiblioteca
             }
         }
 
+        public void ConsultarLivro(string titulo) {
+            foreach (Livro livro in acervoLivros)
+            {
+                if (titulo.Equals(livro.Titulo))
+                {
+                    if (livro.Copias > 0)
+                    {
+                        Console.WriteLine($"Livro disponível. Quantidade: {livro.Copias} cópias.");
+                        break;
+                    }
+                    else Console.WriteLine("Livro não tem cópias disponíveis.");
+                }
+                else if ()
+                {
 
+                }
+                else Console.WriteLine("Livro não existe no acervo.");
+                
+            }
+
+        }
         public void MostrarLivros()
         {
             foreach (Livro livro in acervoLivros)
@@ -80,7 +100,10 @@ namespace GerenciamentoDeBiblioteca
                    + livro.Autor
                    + ", "
                    + "COPIAS: "
-                   + livro.Copias;
+                   + livro.Copias
+                   + ", "
+                   + "DATA DE PUBLICAÇÃO: "
+                   + livro.DataPublicacao.ToString("d");
                 Console.WriteLine(dadosDoLivro);
             }
 
