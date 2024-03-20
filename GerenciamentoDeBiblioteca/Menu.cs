@@ -10,18 +10,20 @@ namespace GerenciamentoDeBiblioteca
         LivrosAlugados livrosAlugados = new LivrosAlugados();
 
 
+
         public void MenuGeral()
         {
-            Console.WriteLine("\nQual operação deseja realizar? Digite um número:\n");
-            Console.WriteLine("1 - Adicionar um livro ao acervo da biblioteca");
-            Console.WriteLine("2 - Remover um livro do acervo da biblioteca");
-            Console.WriteLine("3 - Consultar se um livro está disponível para aluguel");
-            Console.WriteLine("4 - Aluguel de um livro para um usuário registrado");
-            Console.WriteLine("5 - Devolução de um livro alugado");
-            Console.WriteLine("6 - Mostrar todos os livros"); 
-            Console.WriteLine("7 - Mostrar todos os livros alugados");
-            Console.WriteLine("Outro dígito - Sair");
+            Console.WriteLine("\n\nQual operação deseja realizar? Digite um número:\n"
+            + "1 - Adicionar um livro ao acervo da biblioteca\n"
+            + "2 - Remover um livro do acervo da biblioteca\n"
+            + "3 - Consultar se um livro está disponível para aluguel\n"
+            + "4 - Aluguel de um livro para um usuário registrado\n"
+            + "5 - Devolução de um livro alugado\n"
+            + "6 - Mostrar todos os livros\n"
+            + "7 - Mostrar todos os livros alugados\n"
+            + "Outro dígito - Sair");
             operacaoDesejada = byte.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
 
             switch (operacaoDesejada)
             {
@@ -46,40 +48,29 @@ namespace GerenciamentoDeBiblioteca
                 case 7:
                     MenuMostrarTodosLivrosAlugados();
                     break;
-            }
+            }            
         }
+
 
 
         public void MenuFormularioPadrao()
         {
-            Console.WriteLine("\nQual o titulo do livro?");
+            Console.WriteLine("\n\nQual o titulo do livro?");
             string titulo = Console.ReadLine();
 
             Console.WriteLine("\nQual o autor do livro?");
             string autor = Console.ReadLine();
 
-            Console.WriteLine("\nQual a data de publicação? (dd/mm/aaaa)");
-            DateTime dataPublicacao;
+            Console.WriteLine("\nQual o ano de publicação?");
+            short anoPublicacao = short.Parse(Console.ReadLine());
 
-            while (true)
-            {
-                try
-                {
-                    dataPublicacao = DateTime.Parse(Console.ReadLine());
-                    break;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Data inválida! {e.Message}. Cadastre a data novamente (dd/mm/aaaa).");
-                }
-            }
-            
+
             Console.WriteLine("\nQual quantidade de copias?");
             byte quantidade = byte.Parse(Console.ReadLine());
 
             livro.Titulo = titulo;
             livro.Autor = autor;
-            livro.DataPublicacao = dataPublicacao;
+            livro.AnoPublicacao = anoPublicacao;
             livro.Copias = quantidade;
         }
 
@@ -87,7 +78,7 @@ namespace GerenciamentoDeBiblioteca
         public void MenuAdicionarLivro()
         {
             MenuFormularioPadrao();
-            livro.AdicionarLivro(livro.Titulo, livro.Autor, livro.DataPublicacao, livro.Copias);
+            livro.AdicionarLivro(livro.Titulo, livro.Autor, livro.AnoPublicacao, livro.Copias);
 
             MenuGeral();
         }
@@ -96,7 +87,7 @@ namespace GerenciamentoDeBiblioteca
         public void MenuRemoverLivro()
         {
             MenuFormularioPadrao();
-            livro.RemoverLivro(livro.Titulo, livro.Autor, livro.DataPublicacao, livro.Copias);
+            livro.RemoverLivro(livro.Titulo, livro.Autor, livro.AnoPublicacao, livro.Copias);
 
             MenuGeral();
         }
@@ -104,7 +95,7 @@ namespace GerenciamentoDeBiblioteca
 
         public void MenuConsultarLivro()
         {
-            Console.WriteLine("\nQual título gostaria de consultar?");
+            Console.WriteLine("\n\nQual título gostaria de consultar?");
             string consultarTitulo = Console.ReadLine();
             livro.ConsultarLivro(consultarTitulo);
 
@@ -114,10 +105,10 @@ namespace GerenciamentoDeBiblioteca
 
         public void MenuAlugarLivro()
         {
-            Console.WriteLine("\nQual título gostaria de alugar?");
+            Console.WriteLine("\n\nQual título gostaria de alugar?");
             string alugarTitulo = Console.ReadLine();
             Console.WriteLine("\nQual autor do livro?");
-            string alugarAutor = Console.ReadLine();            
+            string alugarAutor = Console.ReadLine();
             Console.WriteLine("Para qual usuário será alugado o livro?");
             Console.Write("Nome: ");
             string nomeUsuario = Console.ReadLine();
@@ -127,12 +118,17 @@ namespace GerenciamentoDeBiblioteca
             Usuario usuario = new Usuario(nomeUsuario, sobrenomeUsuario);
             usuario.AdicionarUsuario(usuario);
 
-            /* AS DUAS LINHAS ABAIXO FORAM IMPLEMENTADAS
-             APÓS RECEBER AJUDA DO DEV ITAMAR POIS EU
-             NÃO ESTAVA CONSEGUINDO REGISTRAR O LIVRO
-             ALUGADO NA LISTA LIVROSALUGADOS */
             LivrosAlugados livroAlugado = new LivrosAlugados(nomeUsuario, sobrenomeUsuario, alugarTitulo, alugarAutor);
             livrosAlugados.AdicionarLivroAlugado(livroAlugado);
+
+            foreach (Livro livro in livro.acervoLivros)
+            {
+                if (alugarTitulo.Equals(livro.Titulo) && alugarAutor.Equals(livro.Autor))
+                {
+                    livro.Copias -= 1;
+                    break;
+                }
+            }
 
             MenuGeral();
         }
@@ -140,22 +136,40 @@ namespace GerenciamentoDeBiblioteca
 
         public void MenuDevolverLivro()
         {
-        }
+            Console.WriteLine("\n\nQual título será devolvido?");
+            string devolverTitulo = Console.ReadLine();
+            Console.WriteLine("Qual autor do livro?");
+            string devolverAutor = Console.ReadLine();
+            Console.WriteLine("Qual primeiro nome do usuário está devolvendo?");
+            string devolverUsuarioNome = Console.ReadLine();
+            Console.WriteLine("Qual sobrenome do usuário está devolvendo?");
+            string devolverUsuarioSobrenome = Console.ReadLine();
 
-
-        public void MenuMostrarTodosLivros()
-        {
-            Console.WriteLine("\nLIVROS DO ACERVO:");
-            livro.MostrarLivros();
-            Console.ReadLine();
+            livrosAlugados.DevolverLivro(devolverTitulo, devolverAutor, devolverUsuarioNome, devolverUsuarioSobrenome);
+            foreach (Livro livro in livro.acervoLivros)
+            {
+                if (devolverTitulo.Equals(livro.Titulo) && devolverAutor.Equals(livro.Autor))
+                {
+                    livro.Copias++;
+                    break;
+                }
+            }
             MenuGeral();
         }
 
 
-        public void MenuMostrarTodosLivrosAlugados()
-        {            
-            livrosAlugados.MostrarLivrosAlugados();
-            MenuGeral();
+            public void MenuMostrarTodosLivros()
+            {
+                Console.WriteLine("\n\nLIVROS DO ACERVO:");
+                livro.MostrarLivros();
+                MenuGeral();
+            }
+
+
+            public void MenuMostrarTodosLivrosAlugados()
+            {
+                livrosAlugados.MostrarLivrosAlugados();
+                MenuGeral();
+            }
         }
     }
-}

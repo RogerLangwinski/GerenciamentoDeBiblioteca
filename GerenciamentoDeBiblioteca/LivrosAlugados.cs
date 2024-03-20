@@ -10,13 +10,14 @@ namespace GerenciamentoDeBiblioteca
         internal string sobrenome;
         internal string titulo;
         internal string autor;
+        public Livro livro = new Livro();
 
         public LivrosAlugados()
         {
         }
 
         public LivrosAlugados(string nome, string sobrenome, string titulo, string autor)
-        {            
+        {
             this.nome = nome;
             this.sobrenome = sobrenome;
             this.titulo = titulo;
@@ -26,7 +27,19 @@ namespace GerenciamentoDeBiblioteca
         public void AdicionarLivroAlugado(LivrosAlugados livroAlugado)
         {
             livrosAlugados.Add(livroAlugado);
-            Console.WriteLine(livroAlugado.nome + " " + livroAlugado.sobrenome + " " + livroAlugado.titulo + " " + livroAlugado.autor);
+        }
+
+
+        public void DevolverLivro(string titulo, string autor, string usuarioNome, string usuarioSobrenome)
+        {
+            foreach (LivrosAlugados livroAlugado in livrosAlugados)
+            {
+                if (titulo.Equals(livroAlugado.titulo) && autor.Equals(livroAlugado.autor) && usuarioNome.Equals(livroAlugado.nome) && usuarioSobrenome.Equals(livroAlugado.sobrenome))
+                {
+                    livrosAlugados.Remove(livroAlugado);                  
+                    break;
+                }
+            }
         }
 
 
@@ -34,19 +47,19 @@ namespace GerenciamentoDeBiblioteca
         {
             foreach (LivrosAlugados livroAlugado in livrosAlugados)
             {
-                string dadosDoAluguel = "\nUsuario: "
-                   + livroAlugado.nome 
-                   + " " 
+                string dadosDoAluguel = "Usuario: "
+                   + livroAlugado.nome
+                   + " "
                    + livroAlugado.sobrenome
-                   +"\nLivros alugados: "
+                   + "\nLivros alugados: "
                    + "TÍTULO: "
                    + livroAlugado.titulo
                    + ", "
                    + "AUTOR: "
-                   + livroAlugado.autor;  
+                   + livroAlugado.autor;
                 Console.WriteLine(dadosDoAluguel);
             }
         }
-        
+
     }
 }

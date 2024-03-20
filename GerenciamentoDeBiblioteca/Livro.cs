@@ -8,10 +8,9 @@ namespace GerenciamentoDeBiblioteca
     {
         internal string Titulo;
         internal string Autor;
-        internal DateTime DataPublicacao;
+        internal short AnoPublicacao;
         internal byte Copias;
-        List<Livro> acervoLivros = new List<Livro>();
-        LivrosAlugados livroAlugado = new LivrosAlugados();
+        public List<Livro> acervoLivros = new List<Livro>();        
 
 
 
@@ -19,19 +18,19 @@ namespace GerenciamentoDeBiblioteca
         {
         }
 
-        public Livro(string titulo, string autor, DateTime dataPublicacao, byte copias)
+        public Livro(string titulo, string autor, short anoPublicacao, byte copias)
         {
             Titulo = titulo;
             Autor = autor;
-            DataPublicacao = dataPublicacao;
+            AnoPublicacao = anoPublicacao;
             Copias = copias;
         }
 
 
 
-        public void AdicionarLivro(string titulo, string autor, DateTime dataPublicacao, byte copias)
+        public void AdicionarLivro(string titulo, string autor, short anoPublicacao, byte copias)
         {
-            Livro livro = new Livro(titulo, autor, dataPublicacao, copias);
+            Livro livro = new Livro(titulo, autor, anoPublicacao, copias);
 
             if (acervoLivros.Count > 0)
             {
@@ -39,13 +38,13 @@ namespace GerenciamentoDeBiblioteca
                 {
                     if (titulo.Equals(x.Titulo))
                     {
-                        Console.WriteLine("Livro já existe no acervo. Nenhum livro adicionado.\n"); ;
+                        Console.WriteLine("\n\nLivro já existe no acervo. Nenhum livro adicionado.\n"); ;
                         break;
                     }
                     else
                     {
                         acervoLivros.Add(livro);
-                        Console.WriteLine($"\nLivro {titulo} adicionado.\n");
+                        Console.WriteLine($"\n\nLivro {titulo} adicionado.\n");
                         break;
                     }
                 }
@@ -53,12 +52,12 @@ namespace GerenciamentoDeBiblioteca
             else
             {
                 acervoLivros.Add(livro);
-                Console.WriteLine($"\nLivro {titulo} adicionado.\n");
+                Console.WriteLine($"\n\nLivro {titulo} adicionado.\n");
             }
         }
 
 
-        public void RemoverLivro(string titulo, string autor, DateTime dataDePublicacao, byte quantidadeRemovida)
+        public void RemoverLivro(string titulo, string autor, short anoDePublicacao, byte quantidadeRemovida)
         {
             foreach (Livro livro in acervoLivros)
             {
@@ -83,11 +82,11 @@ namespace GerenciamentoDeBiblioteca
 
                     if (livro.Copias > 0)
                     {
-                        Console.WriteLine($"Livro disponível. Quantidade: {livro.Copias} cópias.");
+                        Console.WriteLine($"\n\nLivro disponível. Quantidade: {livro.Copias} cópias.");
                     }
                     else
                     {
-                        Console.WriteLine("Livro não tem cópias disponíveis.");
+                        Console.WriteLine("\n\nLivro não tem cópias disponíveis.");
                     }
                 }
                 else continue;
@@ -95,45 +94,11 @@ namespace GerenciamentoDeBiblioteca
 
             if (nenhumLivroEncontrado == true)
             {
-                Console.WriteLine("Livro não existe no acervo.");
+                Console.WriteLine("\n\nLivro não existe no acervo.");
             }
 
         }
-
-        /* TRECHO DE CÓDIGO INUTILIZADO APÓS AJUDA DO ITAMAR MENCIONADA NA CLASSE MENU
-        public void EmprestarLivro(string titulo, string autor, Usuario usuario)
-        {
-            livroAlugado.nome = usuario.Nome;
-            livroAlugado.sobrenome = usuario.SobreNome;
-            livroAlugado.titulo = titulo;
-            livroAlugado.autor = autor;
-            livroAlugado.AdicionarLivroAlugado(livroAlugado);
-
-
-            bool existeUsuario = usuario.VerificaUsuario(usuario.Nome, usuario.SobreNome);
-
-            if (existeUsuario == true)
-            {
-                foreach (Livro livro in acervoLivros)
-                {
-                    if (titulo.Equals(livro.Titulo) && autor.Equals(livro.Autor))
-                    {
-                        LivrosAlugados livroAlugado = new LivrosAlugados(usuario.Nome, usuario.SobreNome, titulo, autor);
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-            }
-            else
-            {
-                LivrosAlugados livroAlugado = new LivrosAlugados(usuario.Nome, usuario.SobreNome, titulo, autor);
-            }
-        }*/
-
-
+              
 
         public void MostrarLivros()
         {
@@ -148,8 +113,8 @@ namespace GerenciamentoDeBiblioteca
                    + "COPIAS: "
                    + livro.Copias
                    + ", "
-                   + "DATA DE PUBLICAÇÃO: "
-                   + livro.DataPublicacao.ToString("d");
+                   + "ANO DE PUBLICAÇÃO: "
+                   + livro.AnoPublicacao.ToString("d");
                 Console.WriteLine(dadosDoLivro);
             }
 
