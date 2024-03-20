@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace GerenciamentoDeBiblioteca
 {
     internal class Livro
@@ -10,6 +11,7 @@ namespace GerenciamentoDeBiblioteca
         internal DateTime DataPublicacao;
         internal byte Copias;
         List<Livro> acervoLivros = new List<Livro>();
+        LivrosAlugados livroAlugado = new LivrosAlugados();
 
 
 
@@ -68,12 +70,13 @@ namespace GerenciamentoDeBiblioteca
             }
         }
 
+
         public void ConsultarLivro(string titulo)
         {
             bool nenhumLivroEncontrado = true;
 
             foreach (Livro livro in acervoLivros)
-            {                
+            {
                 if (titulo.Equals(livro.Titulo))
                 {
                     nenhumLivroEncontrado = false;
@@ -97,25 +100,40 @@ namespace GerenciamentoDeBiblioteca
 
         }
 
-
-        public void EmprestarLivro(string titulo, string autor)
+        /* TRECHO DE CÓDIGO INUTILIZADO APÓS AJUDA DO ITAMAR MENCIONADA NA CLASSE MENU
+        public void EmprestarLivro(string titulo, string autor, Usuario usuario)
         {
-            foreach (Livro livro in acervoLivros)
-            {
-                if (titulo.Equals(livro.Titulo) && autor.Equals(livro.Autor))
-                {
-                    Console.WriteLine("Para qual usuário será alugado o livro?");
-                    Console.Write("Nome: ");
-                    string nomeUsuario = Console.ReadLine();
-                    Console.Write("Sobrenome: ");
-                    string sobrenomeUsuario = Console.ReadLine();
-                    Usuario usuario = new Usuario(nomeUsuario, sobrenomeUsuario);
-                    usuario.livrosAlugados.Add(livro);
-                }
-               
-            }
+            livroAlugado.nome = usuario.Nome;
+            livroAlugado.sobrenome = usuario.SobreNome;
+            livroAlugado.titulo = titulo;
+            livroAlugado.autor = autor;
+            livroAlugado.AdicionarLivroAlugado(livroAlugado);
 
-        }
+
+            bool existeUsuario = usuario.VerificaUsuario(usuario.Nome, usuario.SobreNome);
+
+            if (existeUsuario == true)
+            {
+                foreach (Livro livro in acervoLivros)
+                {
+                    if (titulo.Equals(livro.Titulo) && autor.Equals(livro.Autor))
+                    {
+                        LivrosAlugados livroAlugado = new LivrosAlugados(usuario.Nome, usuario.SobreNome, titulo, autor);
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            else
+            {
+                LivrosAlugados livroAlugado = new LivrosAlugados(usuario.Nome, usuario.SobreNome, titulo, autor);
+            }
+        }*/
+
+
 
         public void MostrarLivros()
         {

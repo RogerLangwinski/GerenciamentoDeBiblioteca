@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GerenciamentoDeBiblioteca
 {
@@ -11,19 +9,40 @@ namespace GerenciamentoDeBiblioteca
         internal string Nome;
         internal string SobreNome;
         internal List<Usuario> listaDeUsuarios = new List<Usuario>();
-        internal List<Livro> livrosAlugados = new List<Livro>();
 
-
+        public Usuario()
+        {
+        }
 
         public Usuario(string nome, string sobreNome)
+        {            
+            Nome = nome;
+            SobreNome = sobreNome;            
+        }
+
+
+        public void AdicionarUsuario(Usuario usuario)
         {
-            Usuario usuario = new Usuario(nome, sobreNome);
-            usuario.Nome = nome;
-            usuario.SobreNome = sobreNome;
             listaDeUsuarios.Add(usuario);
         }
 
 
-        
+
+        public bool VerificaUsuario(string nome, string sobrenome)
+        {
+            bool usuarioEncontrado = false;
+
+            foreach (Usuario usuario in listaDeUsuarios)
+            {
+                if (nome.Equals(usuario.Nome) && sobrenome.Equals(usuario.SobreNome))
+                {
+                    usuarioEncontrado = true;
+                    break;
+                }
+                else continue;
+            }
+            if (usuarioEncontrado == true) return true;
+            else return false;
+        }        
     }
 }

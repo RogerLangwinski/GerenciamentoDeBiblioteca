@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Globalization;
+
+
 namespace GerenciamentoDeBiblioteca
 {
     class Menu
     {
         internal byte operacaoDesejada;
         Livro livro = new Livro();
-        
+        LivrosAlugados livrosAlugados = new LivrosAlugados();
+
 
         public void MenuGeral()
         {
@@ -16,7 +18,8 @@ namespace GerenciamentoDeBiblioteca
             Console.WriteLine("3 - Consultar se um livro está disponível para aluguel");
             Console.WriteLine("4 - Aluguel de um livro para um usuário registrado");
             Console.WriteLine("5 - Devolução de um livro alugado");
-            Console.WriteLine("6 - Mostrar todos os livros");
+            Console.WriteLine("6 - Mostrar todos os livros"); 
+            Console.WriteLine("7 - Mostrar todos os livros alugados");
             Console.WriteLine("Outro dígito - Sair");
             operacaoDesejada = byte.Parse(Console.ReadLine());
 
@@ -39,6 +42,9 @@ namespace GerenciamentoDeBiblioteca
                     break;
                 case 6:
                     MenuMostrarTodosLivros();
+                    break;
+                case 7:
+                    MenuMostrarTodosLivrosAlugados();
                     break;
             }
         }
@@ -109,16 +115,31 @@ namespace GerenciamentoDeBiblioteca
         public void MenuAlugarLivro()
         {
             Console.WriteLine("\nQual título gostaria de alugar?");
-            string emprestarTitulo = Console.ReadLine();
+            string alugarTitulo = Console.ReadLine();
             Console.WriteLine("\nQual autor do livro?");
-            string emprestarAutor = Console.ReadLine();
-            livro.EmprestarLivro(emprestarTitulo, emprestarAutor);
+            string alugarAutor = Console.ReadLine();            
+            Console.WriteLine("Para qual usuário será alugado o livro?");
+            Console.Write("Nome: ");
+            string nomeUsuario = Console.ReadLine();
+            Console.Write("Sobrenome: ");
+            string sobrenomeUsuario = Console.ReadLine();
+
+            Usuario usuario = new Usuario(nomeUsuario, sobrenomeUsuario);
+            usuario.AdicionarUsuario(usuario);
+
+            /* AS DUAS LINHAS ABAIXO FORAM IMPLEMENTADAS
+             APÓS RECEBER AJUDA DO DEV ITAMAR POIS EU
+             NÃO ESTAVA CONSEGUINDO REGISTRAR O LIVRO
+             ALUGADO NA LISTA LIVROSALUGADOS */
+            LivrosAlugados livroAlugado = new LivrosAlugados(nomeUsuario, sobrenomeUsuario, alugarTitulo, alugarAutor);
+            livrosAlugados.AdicionarLivroAlugado(livroAlugado);
+
+            MenuGeral();
         }
 
 
         public void MenuDevolverLivro()
         {
-
         }
 
 
@@ -131,5 +152,10 @@ namespace GerenciamentoDeBiblioteca
         }
 
 
+        public void MenuMostrarTodosLivrosAlugados()
+        {            
+            livrosAlugados.MostrarLivrosAlugados();
+            MenuGeral();
+        }
     }
 }
